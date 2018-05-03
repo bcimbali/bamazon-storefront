@@ -33,7 +33,7 @@ function promptCustomerForItem(inventory) {
         let choiceId = parseInt(val.choice);
         // query products to see if have enough
         let product = checkInventory(choiceId, inventory);
-        console.log(product);
+        // console.log(product);
         if (product) {
             promptCustomerForQuantity(product);
         }
