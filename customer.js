@@ -10,7 +10,7 @@ var connection = mysql.createConnection({
     user: "root",
 
     // Your password
-    password: "goodtitle54",
+    password: "root",
     database: "bamazon",
     socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock'
 });
@@ -38,7 +38,8 @@ function promptCustomerForItem(inventory) {
             promptCustomerForQuantity(product);
         }
         else {
-            console.log('That item is not in our inventory');
+            console.log('\nThat item is not in our inventory.\n');
+            console.log('This is what we have for sale:\n');
             displayItems();
         }
     });
@@ -54,7 +55,8 @@ function promptCustomerForQuantity(product) {
     ]).then(function(val) {
         let quantity = parseInt(val.quantity);
         if (quantity > product.stock_quantity) {
-            console.log('Not enough');
+            console.log('\nSorry, we do not have enough of that item in stock.\n');
+            console.log('Would you like less of that amount? We only have ' + product.stock_quantity + ' in stock.\n');
             displayItems();
         }
         else {
@@ -66,11 +68,12 @@ function promptCustomerForQuantity(product) {
 function makePurchase(product, quantity) {
     connection.query(
         // Update database
-        'UPDATE products SET stock_quantity = stock_quantity - ? WHERE item_id = ?'
-        [quantity, product.item_id],
+        'UPDATE products SET stock_quantity = ' +  (product.stock_quantity - quantity) + ' WHERE item_id = ' + product.item_id,
         function(err, res) {
-            console.log('Success');
-            displayItems();
+            console.log('\nYour order has been placed.\n\nYour order total is $' + (product.price * quantity));
+            console.log('\nThank you for shopping with us!');
+            console.log('\n-----------------------------------------------------------------------\n');
+            continueShopping();
         }
     )
 }
@@ -93,6 +96,28 @@ function displayItems() {
         // prompt customer for product
         promptCustomerForItem(res);
 
-        connection.end();
+        // connection.end();
     });
 }
+
+function continueShopping() {
+    inquirer.prompt([
+        {
+            name: 'continue',
+            type: 'confirm',
+            message: 'Would you like to continue shopping?'
+        }
+    ]).then(function(val) {
+        if (val.continue) {
+            // Stuff
+            displayItems();
+        }
+        else {
+            // Stuff
+            connection.end();
+        }
+    })
+};
+
+
+
