@@ -86,7 +86,7 @@ function addToInventory() {
         .then(function(answer) {
         // when finished prompting, insert a new item into the db with that info
         connection.query(
-            "UPDATE products SET stock_quantity = " + answer.quantitytoadd +" WHERE item_id = " + answer.idtoselect, function(err, res) {
+            "UPDATE products SET stock_quantity = stock_quantity + " + answer.quantitytoadd +" WHERE item_id = " + answer.idtoselect, function(err, res) {
             if (err) throw err;
             console.log("Your quantity was updated successfully!");
             // console.log(res);
