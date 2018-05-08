@@ -13,6 +13,7 @@ An Amazon-like storefront app built with Node.js and MySQL.   The app will take 
     - `node bamazonManager.js` for manager view
 
 ### Customer View
+![customerview](./customer.svg)
 - As mentioned above, run `node customer.js` 
 - A list of all the items for sale will be displayed in table format (to the terminal)
 - A prompt will ask you to enter the ID of the item you want to buy
@@ -20,6 +21,7 @@ An Amazon-like storefront app built with Node.js and MySQL.   The app will take 
 - If there's enough inventory for your quantity, your purchase will be completed
 
 ### Manager View
+![managerview](./bamManager.svg)
 - As mentioned in Getting Started, run `node bamazonManager.js`
 - A list of 4 actions will be presented:
     - `View products for sale`
